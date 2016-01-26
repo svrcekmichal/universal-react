@@ -1,0 +1,10 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "node_modules",
+    "webpack-assets.json"
+  ],
+  "verbose": true,
+  "ext": "js jsx json"
+}

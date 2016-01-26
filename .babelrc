@@ -1,0 +1,17 @@
+{
+  "presets":["es2015","react"],
+  "plugins":[
+    "transform-object-rest-spread",
+    "transform-class-properties",
+    "transform-async-to-generator",
+    "transform-decorators-legacy"
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "transform-react-constant-elements",
+        "transform-react-inline-elements"
+      ]
+    }
+  }
+}
