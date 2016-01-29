@@ -14,7 +14,6 @@ import createHistory from 'history/lib/createMemoryHistory';
 import {match, RouterContext} from 'react-router';
 import {Provider} from 'react-redux';
 import {getRoutes} from 'routes';
-import {createInitialState as createAuthInitialState} from './../redux/modules/auth';
 import {getDataDependencies} from 'utils/fetching';
 
 
@@ -35,9 +34,7 @@ app.use((req, res) => {
   }
 
   const history = createHistory();
-  const store = createStore(history, {
-    auth:createAuthInitialState(req.query && req.query.i9)
-  });
+  const store = createStore(history);
   const routes = getRoutes(store);
 
   if (__DISABLE_SSR__) {

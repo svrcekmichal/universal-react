@@ -17,7 +17,10 @@ export default ({dispatch, getState}) => {
     next({...rest, type: REQUEST});
     return payload.promise(client).then(
       (payload) => next({...rest, payload, type: SUCCESS}),
-      (error) =>  next({...rest, error, type: FAILURE})
+      (error) =>  {
+        console.log(error);
+        return next({...rest, error, type: FAILURE})
+      }
     ).catch((error)=> {
       console.error('MIDDLEWARE ERROR:', error);
       return next({...rest, error, type: FAILURE});

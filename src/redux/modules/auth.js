@@ -1,7 +1,3 @@
-export const createInitialState = (i9) => {
-  return {i9:i9 || null};
-}
-
-export default function reducer(state = createInitialState(), action) {
+export default function reducer(state = {}, action) {
   return state;
 }
