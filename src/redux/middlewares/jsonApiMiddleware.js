@@ -26,20 +26,23 @@ export default ({dispatch}) => next => action => {
   let entities = {};
   let relations = {};
 
-  function addRelationToObject(relationName, relationFrom, relationTo, multi = true) {
+  function addRelationsToObject(relationName, relationFrom, newRelations) {
     relations[relationName] = relations[relationName] || {};
-    if(multi) {
+    if(Array.isArray(newRelations)) {
       relations[relationName][relationFrom] = relations[relationName][relationFrom] || []
-      relations[relationName][relationFrom].push(relationTo);
+      for(const relationTo of newRelations) {
+        relations[relationName][relationFrom].push(relationTo.id);
+      }
     } else {
-      relations[relationName][relationFrom] = relationTo;
+      relations[relationName][relationFrom] = newRelations.id;
     }
   }
 
   if(relationMap === Object(relationMap) && relationMap['primary'] !== undefined) {
-    const {name, id, multi } = relationMap['primary'];
+    const {name, id} = relationMap['primary'];
     for(const entity of primaryData) {
-        addRelationToObject(name,id, entity.id, multi);
+        const relation = {id:entity.id};
+        addRelationsToObject(name, id, Array.isArray(data) ? [relation] : relation);
     }
   }
 
@@ -55,12 +58,12 @@ export default ({dispatch}) => next => action => {
           console.warn(`Missing relation "${apiRelationName}" specification between entities in action with type ${type}, relation not added to state`);
           continue;
         }
-        const {name, multi} = relationMap[apiRelationName]
-        addRelationToObject(name, id, entityRelations[apiRelationName].data.id, multi);
+        const name = relationMap[apiRelationName]
+        addRelationsToObject(name, id, entityRelations[apiRelationName].data);
       }
     } else if(entityRelations) { //relationMap is just true value, relations are mapped to the same as they are with default multi:true
       for(const apiRelationName of Object.keys(entityRelations)) {
-        addRelationToObject(apiRelationName, id, entityRelations[apiRelationName].data.id);
+        addRelationToObject(apiRelationName, id, entityRelations[apiRelationName].data);
       }
     }
   }

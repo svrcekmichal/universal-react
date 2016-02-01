@@ -55,10 +55,8 @@ function loadTopics() {
     meta: {
       client:true,
       jsonApi:{
-        category:{
-          name: 'forum_topic_category',
-          multi: false
-        }
+        category:'forum_topic_category',
+        answers:'forum_topic_answer'
       }
     }
   }

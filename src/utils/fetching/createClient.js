@@ -11,7 +11,6 @@ export default function client() {
     return client = axios.create({
       responseType: 'json'
     })
-
   }
 
   return createClient();
