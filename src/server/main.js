@@ -14,8 +14,7 @@ import createHistory from 'history/lib/createMemoryHistory';
 import {match, RouterContext} from 'react-router';
 import {Provider} from 'react-redux';
 import {getRoutes} from 'routes';
-import {getDataDependencies} from 'utils/fetching';
-
+import {getDataDependencies} from 'redux-simple-fetch';
 
 // const pretty = new PrettyError();
 const app = new Express();
@@ -66,7 +65,6 @@ app.use((req, res) => {
       hydrateOnClient();
     } else if(renderProps) {
         Promise.all(getDataDependencies(renderProps.components)(store,renderProps.location, renderProps.params))
-          .then(() => Promise.all(getDataDependencies(renderProps.components, true)(store,renderProps.location, renderProps.params)))
           .then(render.bind(this,renderProps))
           .catch((e) => {
             console.error(e);

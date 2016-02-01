@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import {Link, AzetLink} from 'react-router';
 import {connect} from 'react-redux';
-import {connectData} from 'utils/fetching';
+import connectData from 'redux-simple-fetch';
 
 const app = ({children,route}) => (
   <div className="app--container">
@@ -37,7 +37,7 @@ function loadCategories() {
   return {
     types: ['LOAD', 'LOAD_SUCCESS', 'LOAD_FAIL'],
     payload: {
-      promise: (client) => client.get('http://svrcek.dev/api/categories')
+      promise: (client) => client.get('http://svrcek.forum-api.azet.dev/forum/api/categories')
     },
     meta: {
       client:true,
@@ -50,7 +50,7 @@ function loadTopics() {
   return {
     types: ['LOAD', 'LOAD_SUCCESS', 'LOAD_FAIL'],
     payload: {
-      promise: (client) => client.get('http://svrcek.dev/api/topics')
+      promise: (client) => client.get('http://svrcek.forum-api.azet.dev/forum/api/topics')
     },
     meta: {
       client:true,
@@ -70,6 +70,4 @@ const prefetch = ({getState, dispatch}) => {
   ]);
 };
 
-const defer = () => {};
-
-export default connectData(prefetch,defer)(connectedApp);
+export default connectData(prefetch)(connectedApp);
