@@ -7,6 +7,7 @@ import {getRoutes} from './routes';
 import {Provider} from 'react-redux';
 import {Router, browserHistory } from 'react-router';
 import {syncHistory } from 'redux-simple-router'
+import {AsyncConnect} from 'redux-simple-fetch';
 
 const store = createStore(browserHistory, window.__data__);
 const routes = getRoutes(store);
@@ -14,10 +15,10 @@ const routes = getRoutes(store);
 const mountPoint = document.getElementById('content');
 
 const router = (
-  <Router history={browserHistory} routes={routes} />
+  <Router history={browserHistory} routes={routes} render={(props) => <AsyncConnect store={store} {...props}/>} />
 );
 
-if(__DEVELOPMENT__ && __DEVTOOLS__) { 
+if(__DEVELOPMENT__ && __DEVTOOLS__) {
   const DevTools = require('./containers/DevTools/DevTools').default;
   ReactDOM.render(
     <Provider store={store} key="provider">

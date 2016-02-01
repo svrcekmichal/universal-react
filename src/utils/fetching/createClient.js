@@ -1,11 +1,6 @@
 import axios from 'axios';
 
-export default function({getState}) {
-  const i9 = getState().auth && getState().auth.i9;
-  return client(i9)
-}
-
-function client(i9) {
+export default function client() {
   let client = null;
 
   function createClient() {
@@ -14,10 +9,8 @@ function client(i9) {
     }
 
     return client = axios.create({
-      params: {i9},
       responseType: 'json'
     })
-
   }
 
   return createClient();
