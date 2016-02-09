@@ -4,6 +4,8 @@ import {Link, AzetLink} from 'react-router';
 import {connect} from 'react-redux';
 import connectData from 'redux-simple-fetch';
 
+import {loadCategories, loadTopics} from 'redux/modules/categories'
+
 const app = ({children,route}) => (
   <div className="app--container">
     <div className="app--nav">
@@ -33,41 +35,11 @@ export const connectedApp =  connect(mapStateToProps)(app);
 
 /************************************************************************/
 
-function loadCategories() {
-  return {
-    types: ['LOAD', 'LOAD_SUCCESS', 'LOAD_FAIL'],
-    payload: {
-      promise: (client) => client.get('http://svrcek.forum-api.azet.dev/forum/api/categories')
-    },
-    meta: {
-      client:true,
-      jsonApi:true
-    }
-  }
-}
-
-function loadTopics() {
-  return {
-    types: ['LOAD', 'LOAD_SUCCESS', 'LOAD_FAIL'],
-    payload: {
-      promise: (client) => client.get('http://svrcek.forum-api.azet.dev/forum/api/topics')
-    },
-    meta: {
-      client:true,
-      jsonApi:{
-        category:'forum_topic_category',
-        answers:'forum_topic_answer'
-      }
-    }
-  }
-}
-
-
-const prefetch = ({getState, dispatch}) => {
+const fetch = ({getState, dispatch}) => {
   return Promise.all([
     dispatch(loadCategories()),
     dispatch(loadTopics())
   ]);
 };
 
-export default connectData(prefetch)(connectedApp);
+export default connectData(fetch)(connectedApp);

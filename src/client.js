@@ -18,7 +18,10 @@ const router = (
   <Router history={browserHistory} routes={routes} render={(props) => <AsyncConnect store={store} {...props}/>} />
 );
 
-if(__DEVELOPMENT__ && __DEVTOOLS__) {
+const hasDevToolsExtension = () => typeof window === 'object'
+  && typeof window.devToolsExtension !== 'undefined';
+
+if(__DEVELOPMENT__ && __DEVTOOLS__ && !hasDevToolsExtension()) {
   const DevTools = require('./containers/DevTools/DevTools').default;
   ReactDOM.render(
     <Provider store={store} key="provider">
