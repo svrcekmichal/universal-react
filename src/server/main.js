@@ -14,7 +14,7 @@ import createHistory from 'history/lib/createMemoryHistory';
 import {match, RouterContext} from 'react-router';
 import {Provider} from 'react-redux';
 import {getRoutes} from 'routes';
-import {getDataDependencies} from 'redux-simple-fetch';
+import {getDataDependencies} from 'react-simple-async';
 
 // const pretty = new PrettyError();
 const app = new Express();
@@ -56,6 +56,11 @@ app.use((req, res) => {
       console.log('send');
   }
 
+  const custom = {
+    dispatch:store.dispatch,
+    getState:store.getState
+  };
+
   match({history,routes,location:req.originalUrl},(error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
@@ -64,7 +69,7 @@ app.use((req, res) => {
       res.status(500);
       hydrateOnClient();
     } else if(renderProps) {
-        Promise.all(getDataDependencies(renderProps.components)(store,renderProps.location, renderProps.params))
+        Promise.all(getDataDependencies(renderProps.components)(renderProps.location, renderProps.params, custom))
           .then(render.bind(this,renderProps))
           .catch((e) => {
             console.error(e);

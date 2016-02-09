@@ -16,4 +16,4 @@ global.webpackIsomorphicTools = new WebpackIsomorphicTools(webpackIsomorphicAsse
   .development(!config.isProduction)
   .server(rootDir, () => {
     require('./server/main');
-  })
+  });

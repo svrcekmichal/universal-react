@@ -1,7 +1,7 @@
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 import customMiddlewares from './middlewares';
 import reducers from './modules';
-import {syncHistory} from 'redux-simple-router'
+import {syncHistory} from 'react-router-redux'
 
 export default function createStore(history, data) {
 

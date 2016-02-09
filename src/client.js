@@ -6,16 +6,21 @@ import reducers from './redux/modules';
 import {getRoutes} from './routes';
 import {Provider} from 'react-redux';
 import {Router, browserHistory } from 'react-router';
-import {syncHistory } from 'redux-simple-router'
-import {AsyncConnect} from 'redux-simple-fetch';
+import {syncHistory } from 'react-router-redux'
+import {AsyncHandler} from 'react-simple-async';
 
 const store = createStore(browserHistory, window.__data__);
 const routes = getRoutes(store);
 
 const mountPoint = document.getElementById('content');
 
+const custom = {
+    dispatch:store.dispatch,
+    getState:store.getState
+};
+
 const router = (
-  <Router history={browserHistory} routes={routes} render={(props) => <AsyncConnect store={store} {...props}/>} />
+  <Router history={browserHistory} routes={routes} render={(props) => <AsyncHandler custom={custom} {...props}/>} />
 );
 
 const hasDevToolsExtension = () => typeof window === 'object'

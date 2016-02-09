@@ -9,7 +9,8 @@ export default function client() {
     }
 
     return client = axios.create({
-      responseType: 'json'
+      responseType: 'json',
+      baseURL:'https://api.github.com/'
     })
   }
 
