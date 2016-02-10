@@ -24,12 +24,12 @@ const router = (
   <Router history={history} routes={routes} render={(props) => <AsyncHandler custom={custom} {...props}/>} />
 );
 
-history.listenBefore((location,callback) => {
-    console.log('new location', location);
-    setTimeout(() => {
-        callback();
-    },1000);
-});
+//history.listenBefore((location,callback) => {
+//    console.log('new location', location);
+//    setTimeout(() => {
+//        callback();
+//    },1000);
+//});
 
 const hasDevToolsExtension = () => typeof window === 'object'
   && typeof window.devToolsExtension !== 'undefined';
