@@ -31,7 +31,7 @@ const app = ({children,route}) => (
 const mapStateToProps = (state) => {
   const {location} = state.routing;
   return {
-    route:location.pathname + location.search
+    route:location
   }
 };
 

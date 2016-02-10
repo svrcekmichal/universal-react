@@ -1,12 +1,12 @@
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 import customMiddlewares from './middlewares';
 import reducers from './modules';
-import {syncHistory} from 'react-router-redux'
+import {routerMiddleware} from 'react-router-redux'
+
 
 export default function createStore(history, data) {
 
-  const reduxRouterMiddleware = syncHistory(history);
-  const middleware = [reduxRouterMiddleware].concat(customMiddlewares);
+  const middleware = [routerMiddleware(history)].concat(customMiddlewares);
   if (__CLIENT__) {
     // middleware.push(createLogger({ collapsed: true }));
   }
@@ -25,7 +25,6 @@ export default function createStore(history, data) {
   }
 
   const store = finalCreateStore(reducers, data);
-  reduxRouterMiddleware.listenForReplays(store);
 
   if(__DEVELOPMENT__ && module.hot) {
     module.hot.accept('./modules', () => {
