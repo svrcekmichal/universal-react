@@ -23,6 +23,13 @@ const router = (
   <Router history={browserHistory} routes={routes} render={(props) => <AsyncHandler custom={custom} {...props}/>} />
 );
 
+browserHistory.listenBefore((location,callback) => {
+    console.log('triggered by => ', (new Error).stack);
+    setTimeout(() => {
+        callback();
+    },2000);
+});
+
 const hasDevToolsExtension = () => typeof window === 'object'
   && typeof window.devToolsExtension !== 'undefined';
 
