@@ -6,10 +6,11 @@ import reducers from './redux/modules';
 import {getRoutes} from './routes';
 import {Provider} from 'react-redux';
 import {Router, browserHistory } from 'react-router';
-import {syncHistory } from 'react-router-redux'
 import {AsyncHandler} from 'react-simple-async';
+import {syncHistoryWithStore} from 'react-router-redux'
 
 const store = createStore(browserHistory, window.__data__);
+const history = syncHistoryWithStore(browserHistory, store);
 const routes = getRoutes(store);
 
 const mountPoint = document.getElementById('content');
@@ -20,14 +21,14 @@ const custom = {
 };
 
 const router = (
-  <Router history={browserHistory} routes={routes} render={(props) => <AsyncHandler custom={custom} {...props}/>} />
+  <Router history={history} routes={routes} render={(props) => <AsyncHandler custom={custom} {...props}/>} />
 );
 
-browserHistory.listenBefore((location,callback) => {
-    console.log('triggered by => ', (new Error).stack);
+history.listenBefore((location,callback) => {
+    console.log('new location', location);
     setTimeout(() => {
         callback();
-    },2000);
+    },1000);
 });
 
 const hasDevToolsExtension = () => typeof window === 'object'

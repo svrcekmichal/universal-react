@@ -10,11 +10,12 @@ import reducers from './../redux/modules';
 import Html from './Html';
 import Promise from 'bluebird';
 import http from 'http';
-import createHistory from 'history/lib/createMemoryHistory';
+import createMemoryHistory from 'history/lib/createMemoryHistory';
 import {match, RouterContext} from 'react-router';
 import {Provider} from 'react-redux';
 import {getRoutes} from 'routes';
 import {getDataDependencies} from 'react-simple-async';
+import {syncHistoryWithStore} from 'react-router-redux'
 
 // const pretty = new PrettyError();
 const app = new Express();
@@ -32,8 +33,9 @@ app.use((req, res) => {
     webpackIsomorphicTools.refresh();
   }
 
-  const history = createHistory();
-  const store = createStore(history);
+  const memoryHistory = createMemoryHistory();
+  const store = createStore(memoryHistory);
+  const history = syncHistoryWithStore(memoryHistory, store);
   const routes = getRoutes(store);
 
   if (__DISABLE_SSR__) {
