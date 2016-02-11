@@ -2,10 +2,12 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import {Link, AzetLink} from 'react-router';
 import {connect} from 'react-redux';
-import asyncData from 'react-simple-async';
+import asyncResolve from 'reasync';
 import {loadRepo, loadRepoContributors} from 'redux/modules/repo'
 
-const fetch = ({dispatch}) => {
+const preResolve = () => new Promise((resolve) => setTimeout(resolve,2000));
+
+const deferResolve = ({dispatch}) => {
     return Promise.all([
         dispatch(loadRepo('svrcekmichal/universal-react')),
         dispatch(loadRepoContributors('svrcekmichal/universal-react'))
@@ -37,4 +39,4 @@ const mapStateToProps = (state) => {
 
 export const connectedApp = connect(mapStateToProps)(app);
 
-export default asyncData(fetch)(connectedApp);
+export default asyncResolve(preResolve,deferResolve)(connectedApp);
