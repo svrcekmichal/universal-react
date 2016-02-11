@@ -3,8 +3,8 @@ import {Route, IndexRoute} from 'react-router';
 
 import App from 'containers/App';
 import Homepage from 'containers/Homepage';
-import Page1 from 'containers/Page1';
-import Page2 from 'containers/Page2';
+import DelayedPage from 'containers/DelayedPage';
+import DelayedWithFetch from 'containers/DelayedWithFetch';
 import NotFound404 from 'containers/404';
 
 export const getRoutes = ({getState}) => {
@@ -13,8 +13,8 @@ export const getRoutes = ({getState}) => {
 
       <IndexRoute component={Homepage} />
 
-      <Route component={Page1} path="page1" />
-      <Route component={Page2} path="page2" />
+      <Route component={DelayedPage} path="delay" />
+      <Route component={DelayedWithFetch} path="delay-with-fetch" />
 
       <Route component={NotFound404} path="*" />
     </Route>
