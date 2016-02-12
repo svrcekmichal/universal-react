@@ -3,7 +3,8 @@
   "ignore": [
     ".git",
     "node_modules",
-    "webpack-assets.json"
+    "webpack-assets.json",
+    ".idea"
   ],
   "verbose": true,
   "ext": "js jsx json"

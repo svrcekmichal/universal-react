@@ -14,7 +14,7 @@ import createMemoryHistory from 'history/lib/createMemoryHistory';
 import {match, RouterContext} from 'react-router';
 import {Provider} from 'react-redux';
 import {getRoutes} from 'routes';
-import {getAsyncDependencies} from 'reasync';
+import {resolveOnServer} from 'reasync';
 import {syncHistoryWithStore} from 'react-router-redux'
 
 // const pretty = new PrettyError();
@@ -71,16 +71,13 @@ app.use((req, res) => {
       res.status(500);
       hydrateOnClient();
     } else if(renderProps) {
-      const resolveParams = [renderProps.location, renderProps.params, custom];
-      const preAsyncDependencies = getAsyncDependencies(renderProps.components);
-      const deferAsyncDependencies = getAsyncDependencies(renderProps.components,false);
-        Promise.all(preAsyncDependencies(...resolveParams))
-          .then(() => Promise.all(deferAsyncDependencies(...resolveParams)))
-          .then(render.bind(this,renderProps))
-          .catch((e) => {
+      resolveOnServer(renderProps,custom).then(
+          render.bind(this,renderProps),
+          (e) => {
             console.error(e);
             hydrateOnClient();
-          });
+          }
+      )
     } else {
       console.error(err);
       res.status(404);
