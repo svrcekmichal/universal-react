@@ -1,2 +1,9 @@
 import React from 'react';
-export default () => (<h1 className="homepage">Homepage</h1>)
+import Helmet from 'react-helmet';
+
+export default () => (
+    <div className="homepage">
+        <Helmet title="Homepage" />
+        <h1>Homepage</h1>
+    </div>
+)

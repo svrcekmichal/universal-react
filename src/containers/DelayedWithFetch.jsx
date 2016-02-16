@@ -1,5 +1,6 @@
 import React from 'react';
 import asyncResolve from 'reasync';
+import Helmet from 'react-helmet';
 import {loadRepo,loadRepoContributors} from '../redux/modules/repo'
 
 const preResolve = () => new Promise((resolve) => setTimeout(resolve,500));
@@ -11,6 +12,7 @@ const deferResolve = ({dispatch}) => Promise.all([
 
 const delayedPageWithFetch = () => (
     <div>
+        <Helmet title="Delayed Page with Fetch" />
         <h1 className="page1">Delayed page</h1>
         <p>rendering of this page was delayed by 0.5sec</p>
         <p>After prefetching finished:</p>

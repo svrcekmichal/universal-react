@@ -5,6 +5,9 @@ import {loadRepo, loadRepoContributors} from 'redux/modules/repo'
 
 const app = ({children}) => (
   <div className="app--container">
+    <Helmet
+        titleTemplate="%s | Universal React by svrcekmichal"
+    />
 
     <div className="app--nav">
       <Link to={{pathname:"/"}} >Homepage</Link>
