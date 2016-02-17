@@ -33,7 +33,7 @@ app.use((req, res) => {
     webpackIsomorphicTools.refresh();
   }
 
-  const memoryHistory = createMemoryHistory();
+  const memoryHistory = createMemoryHistory(req.originalUrl);
   const store = createStore(memoryHistory);
   const history = syncHistoryWithStore(memoryHistory, store);
   const routes = getRoutes(store);
