@@ -15,12 +15,7 @@ const routes = getRoutes(store);
 
 const mountPoint = document.getElementById('content');
 
-const custom = {
-    dispatch:store.dispatch,
-    getState:store.getState
-};
-
-resolveOnClient(history, routes, custom);
+resolveOnClient(history, routes, store);
 const router = (<Router history={history} routes={routes} />);
 
 const hasDevToolsExtension = () => typeof window === 'object'

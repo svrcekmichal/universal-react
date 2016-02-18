@@ -58,11 +58,6 @@ app.use((req, res) => {
       console.log('send');
   }
 
-  const custom = {
-    dispatch:store.dispatch,
-    getState:store.getState
-  };
-
   match({history,routes,location:req.originalUrl},(error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
@@ -71,7 +66,7 @@ app.use((req, res) => {
       res.status(500);
       hydrateOnClient();
     } else if(renderProps) {
-      resolveOnServer(renderProps,custom).then(
+      resolveOnServer(renderProps,store).then(
           render.bind(this,renderProps),
           (e) => {
             console.error(e);

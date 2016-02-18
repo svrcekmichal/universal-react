@@ -62,7 +62,7 @@
     "react-redux": "^4.0.6",
     "react-router": "2.0.0-rc5",
     "react-router-redux": "^4.0.0-beta.1",
-    "reasync": "0.0.2",
+    "reasync": "^0.2.0",
     "redux": "^3.3.1",
     "redux-axios-middleware": "0.0.2",
     "redux-form": "^4.1.1",

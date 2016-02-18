@@ -14,9 +14,6 @@ It's far from being complete, there is a lot of dependencies I want to use in fu
 
 ## Running Dev Server
 
-NPM scripts are optimized for running on windows machines,
-for mac/unix system you have to make little tweaks
-
 ```bash
 //first command line
 npm run start:dev
@@ -28,7 +25,5 @@ npm run start:hot
 
 ## To Be Done?
 
-* optimize isomorphic fetching?
-* react-helmet?
 * immutable?
 * styles (css-modules ???)
