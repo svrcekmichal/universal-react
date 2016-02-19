@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/server';
 import config from './../config';
 import favicon from 'serve-favicon';
 import compression from 'compression';
+import cookieParser from 'cookie-parser';
 import path from 'path';
 import createStore from './../redux/createStore';
 import reducers from './../redux/modules';
@@ -16,12 +17,14 @@ import {Provider} from 'react-redux';
 import {getRoutes} from 'routes';
 import {resolveOnServer} from 'reasync';
 import {syncHistoryWithStore} from 'react-router-redux'
+import createClient from 'utils/createClient';
 
 // const pretty = new PrettyError();
 const app = new Express();
 const server = new http.Server(app);
 
 app.use(compression());
+app.use(cookieParser());
 
 app.use(favicon(path.join('dist', 'favicon.ico')));
 app.use('/assets', Express.static(path.join('dist','assets'), {maxAge: '200d'}));
@@ -33,8 +36,9 @@ app.use((req, res) => {
     webpackIsomorphicTools.refresh();
   }
 
+  const client = createClient(req.cookies);
   const memoryHistory = createMemoryHistory(req.originalUrl);
-  const store = createStore(memoryHistory);
+  const store = createStore(memoryHistory, undefined, client);
   const history = syncHistoryWithStore(memoryHistory, store);
   const routes = getRoutes(store);
 

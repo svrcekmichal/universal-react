@@ -3,9 +3,9 @@ import reducers from './modules';
 
 import {routerMiddleware} from 'react-router-redux'
 import jsonApiMiddleware from './middlewares/jsonApiMiddleware';
+import axiosMiddleware from 'redux-axios-middleware';
 
-
-export default function createStore(history, data) {
+export default function createStore(history, data = undefined, client) {
 
   let devTools = [];
   if(__DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__) {
@@ -23,6 +23,7 @@ export default function createStore(history, data) {
       compose(
           applyMiddleware(
               routerMiddleware(history),
+              axiosMiddleware({client}),
               jsonApiMiddleware
           ),
           ...devTools
