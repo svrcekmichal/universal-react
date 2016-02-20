@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default function client(cookies) {
+export default function create(cookies) {
   let client = null;
 
   function createClient() {
@@ -8,19 +8,21 @@ export default function client(cookies) {
         return client;
     }
 
+    const headers = {};
+    if(typeof cookies !== 'undefined') {
+      headers.Cookie = createCookieString(cookies);
+    }
+
     return client = axios.create({
       responseType: 'json',
       baseURL:'https://api.github.com/',
-      headers:{
-        Cookie:createCookieString(cookies)
-      }
+      headers 
     })
   }
 
-  function createCookieString(cookies)
-  {
+  const createCookieString = (cookies) => {
     return Object.keys(cookies).reduce((previous,key) => previous + `${key}=${cookies[key]}; ` , '')
-  }
+  };
 
   return createClient();
 }

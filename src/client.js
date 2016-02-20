@@ -8,8 +8,9 @@ import {Provider} from 'react-redux';
 import {Router, browserHistory } from 'react-router';
 import {resolveOnClient} from 'reasync';
 import {syncHistoryWithStore} from 'react-router-redux'
+import createClient from 'utils/createClient';
 
-const store = createStore(browserHistory, window.__data__);
+const store = createStore(browserHistory, window.__data__, createClient());
 const history = syncHistoryWithStore(browserHistory, store);
 const routes = getRoutes(store);
 

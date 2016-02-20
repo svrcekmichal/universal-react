@@ -23,7 +23,7 @@ export default function createStore(history, data = undefined, client) {
       compose(
           applyMiddleware(
               routerMiddleware(history),
-              axiosMiddleware({client}),
+              axiosMiddleware(client),
               jsonApiMiddleware
           ),
           ...devTools
