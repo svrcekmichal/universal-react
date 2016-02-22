@@ -1,22 +1,29 @@
 import React from 'react';
-import {Route, IndexRoute} from 'react-router';
-
 import App from 'containers/App';
-import Homepage from 'containers/Homepage';
-import DelayedPage from 'containers/DelayedPage';
-import DelayedWithFetch from 'containers/DelayedWithFetch';
-import NotFound404 from 'containers/404';
 
-export const getRoutes = ({getState}) => {
-  return (
-    <Route component={App} path="/">
+if (typeof require.ensure !== 'function') require.ensure = (d, c) => c(require);
 
-      <IndexRoute component={Homepage} />
+const module = (path, required) => {
+    return {...required, path};
+};
 
-      <Route component={DelayedPage} path="delay" />
-      <Route component={DelayedWithFetch} path="delay-with-fetch" />
+export const getRoutes = () => ({
+    path:'/',
+    component:App,
+    getChildRoutes:(location, callback) => {
+        require.ensure([], (require) => {
+            callback(null, [
+                module('delayed',require('pages/delayed').default),
+                module('not-found',require('pages/404').default)
+            ]);
+        });
+    },
+    getIndexRoute:(location, callback) => {
+        require.ensure([], function (require) {
+            callback(null, {component:require('pages/homepage/Homepage').default})
+        })
+    }
+});
 
-      <Route component={NotFound404} path="*" />
-    </Route>
-  )
-}
+
+

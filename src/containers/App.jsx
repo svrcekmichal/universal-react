@@ -12,9 +12,9 @@ const app = ({children}) => (
     <div className="app--nav">
       <Link to={{pathname:"/"}} >Homepage</Link>
       <br/>
-      <Link to={{pathname:"/delay"}} >Prefetch with 2sec delay</Link>
+      <Link to={{pathname:"/delayed"}} >Prefetch with 2sec delay</Link>
       <br/>
-      <Link to={{pathname:"/delay-with-fetch"}} >Page2</Link>
+      <Link to={{pathname:"/delayed/with-fetch"}} >Page2</Link>
       <br/>
       <Link to={{pathname:"/not-found"}} >Not found</Link>
     </div>

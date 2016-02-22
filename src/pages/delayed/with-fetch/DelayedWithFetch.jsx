@@ -1,12 +1,13 @@
 import React from 'react';
 import asyncResolve from 'reasync';
 import Helmet from 'react-helmet';
-import {loadRepo,loadRepoContributors} from '../redux/modules/repo'
+import {loadRepo,loadRepoContributors} from '../../../redux/modules/repo'
 
-const preResolve = () => new Promise((resolve) => setTimeout(resolve,500));
+const preResolve = ({dispatch}) => Promise.all([
+    dispatch(loadRepo('svrcekmichal/universal-react'))
+]);
 
 const deferResolve = ({dispatch}) => Promise.all([
-    dispatch(loadRepo('svrcekmichal/universal-react')),
     dispatch(loadRepoContributors('svrcekmichal/universal-react'))
 ]);
 
