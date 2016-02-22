@@ -7,7 +7,6 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import createStore from './../redux/createStore';
-import reducers from './../redux/modules';
 import Html from './Html';
 import Promise from 'bluebird';
 import http from 'http';
@@ -78,7 +77,7 @@ app.use((req, res) => {
           }
       )
     } else {
-      console.error(err);
+      console.error(error);
       res.status(404);
       hydrateOnClient();
     }

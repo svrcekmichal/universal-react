@@ -1,8 +1,7 @@
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
-import reducers from './modules';
+import reducers from './reducers';
 
 import {routerMiddleware} from 'react-router-redux'
-import jsonApiMiddleware from './middlewares/jsonApiMiddleware';
 import axiosMiddleware from 'redux-axios-middleware';
 
 export default function createStore(history, data = undefined, client) {
@@ -23,8 +22,7 @@ export default function createStore(history, data = undefined, client) {
       compose(
           applyMiddleware(
               routerMiddleware(history),
-              axiosMiddleware(client),
-              jsonApiMiddleware
+              axiosMiddleware(client)
           ),
           ...devTools
       )
@@ -32,8 +30,8 @@ export default function createStore(history, data = undefined, client) {
   );
 
   if(__DEVELOPMENT__ && module.hot) {
-    module.hot.accept('./modules', () => {
-      store.replaceReducer(require('./modules').default);
+    module.hot.accept('./reducers', () => {
+      store.replaceReducer(require('./reducers').default);
     });
   }
 

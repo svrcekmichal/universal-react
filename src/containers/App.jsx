@@ -1,7 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import {Link} from 'react-router';
-import {loadRepo, loadRepoContributors} from 'redux/modules/repo'
 
 const app = ({children}) => (
   <div className="app--container">
@@ -12,9 +11,7 @@ const app = ({children}) => (
     <div className="app--nav">
       <Link to={{pathname:"/"}} >Homepage</Link>
       <br/>
-      <Link to={{pathname:"/delayed"}} >Prefetch with 2sec delay</Link>
-      <br/>
-      <Link to={{pathname:"/delayed/with-fetch"}} >Page2</Link>
+      <Link to={{pathname:"/repo"}} >Repository</Link>
       <br/>
       <Link to={{pathname:"/not-found"}} >Not found</Link>
     </div>

@@ -13,8 +13,8 @@ export const getRoutes = () => ({
     getChildRoutes:(location, callback) => {
         require.ensure([], (require) => {
             callback(null, [
-                module('delayed',require('pages/delayed').default),
-                module('not-found',require('pages/404').default)
+                module('repo',require('pages/repository').default),
+                module('*',require('pages/404').default)
             ]);
         });
     },
