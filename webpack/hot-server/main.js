@@ -23,7 +23,7 @@ const serverOptions = {
 
 const app = new Express;
 
-app.use(webpackDev(compiler,serverOptions))
+app.use(webpackDev(compiler, serverOptions))
 app.use(webpackHot(compiler));
 
 app.listen(port, () => {

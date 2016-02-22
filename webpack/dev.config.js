@@ -9,12 +9,12 @@ import serverConfig from './../src/config';
 const {host, hotPort:port} = serverConfig;
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(webpackIsomorphicAssets);
 
-const assetsPath = path.resolve(__dirname, 'dist','build');
+const assetsPath = path.resolve(__dirname, 'dist', 'build');
 
 function stylesLoaders() {
 
   const loaders = {
-      'css':''
+    'css': ''
   };
 
   return Object.keys(loaders).map(ext => {
@@ -32,7 +32,7 @@ export default {
   hotPort: port,
   cache: true,
   debug: true,
-  devtools:'cheap-module-eval-source-map',
+  devtools: 'cheap-module-eval-source-map',
   entry: {
     'main': [
       'webpack-hot-middleware/client?path=http://' + host + (port ? (':' + port) : '') + '/__webpack_hmr',
@@ -73,10 +73,10 @@ export default {
       'node_modules'
     ],
     extensions: ['', '.json', '.js', '.jsx'],
-    fallback: path.join(__dirname,"..","node_modules")
+    fallback: path.join(__dirname, "..", "node_modules")
   },
   resolveLoader: {
-    root: path.join(__dirname,"..","node_modules")
+    root: path.join(__dirname, "..", "node_modules")
   },
   plugins: [
     // hot reload

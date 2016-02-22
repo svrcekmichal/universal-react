@@ -7,7 +7,8 @@
     "build": "webpack --verbose --colors --display-error-details --config webpack/prod.config.js",
     "start:prod": "./node_modules/.bin/better-npm-run start:prod",
     "start:dev": "./node_modules/.bin/better-npm-run start:dev",
-    "start:hot": "./node_modules/.bin/better-npm-run start:hot"
+    "start:hot": "./node_modules/.bin/better-npm-run start:hot",
+    "lint": "eslint -c .eslintrc src"
   },
   "betterScripts": {
     "start:prod": {
@@ -77,6 +78,10 @@
   "devDependencies": {
     "babel-plugin-react-transform": "^2.0.0",
     "clean-webpack-plugin": "^0.1.6",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "^6.0.1",
+    "eslint-plugin-import": "^1.0.0-beta.0",
+    "eslint-plugin-react": "^4.0.0",
     "nodemon": "^1.8.1",
     "react-transform-hmr": "^1.0.1",
     "redux-devtools": "^3.0.1",
