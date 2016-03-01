@@ -3,3 +3,4 @@ webpack-assets.json
 webpack-stats.json
 .idea/
 npm-debug.log
+tmp/

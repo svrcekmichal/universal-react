@@ -1,5 +1,5 @@
 import React from 'react';
-import asyncResolve from 'reasync';
+import {pre} from 'reasync';
 import Helmet from 'react-helmet';
 import {shouldLoadRepo,loadRepo} from './redux'
 import {Link} from 'react-router'
@@ -30,4 +30,4 @@ const Repo = ({children}) => (
   </div>
 );
 
-export default asyncResolve(preResolve)(Repo);
+export default pre(preResolve)(Repo);

@@ -5,11 +5,8 @@
     "node": true,
     "mocha": true
   },
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true
-    },
+  "ecmaFeatures": {
+    "experimentalObjectRestSpread": true
   },
   "rules": {
     "react/no-multi-comp": 0,
@@ -47,5 +44,6 @@
     "__DEVTOOLS__": true,
     "socket": true,
     "webpackIsomorphicTools": true
-  }
+  },
+  "parser": "babel-eslint"
 }

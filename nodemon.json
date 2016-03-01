@@ -4,7 +4,8 @@
     ".git",
     "node_modules",
     "webpack-assets.json",
-    ".idea"
+    ".idea",
+    "*/tmp/*"
   ],
   "verbose": true,
   "ext": "js jsx json"

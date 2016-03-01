@@ -1,5 +1,5 @@
 import React from 'react';
-import asyncResolve from 'reasync';
+import {defer} from 'reasync';
 import {shouldLoadRepoAuthor,loadRepoAuthor} from '../redux';
 
 const deferResolve = ({getState,dispatch}) => shouldLoadRepoAuthor(getState()) ? dispatch(loadRepoAuthor('svrcekmichal')) : undefined;
@@ -10,4 +10,4 @@ export const RepoContributors = () => (
   </div>
 );
 
-export default asyncResolve(undefined, deferResolve)(RepoContributors);
+export default defer(deferResolve)(RepoContributors);

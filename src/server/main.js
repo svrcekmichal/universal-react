@@ -16,6 +16,7 @@ import { getRoutes } from 'routes';
 import { resolveOnServer } from 'reasync';
 import { syncHistoryWithStore } from 'react-router-redux';
 import createClient from 'utils/createClient';
+import api from './api';
 
 // const pretty = new PrettyError();
 const app = new Express();
@@ -26,6 +27,8 @@ app.use(cookieParser());
 
 app.use(favicon(path.join('dist', 'favicon.ico')));
 app.use('/assets', Express.static(path.join('dist', 'assets'), { maxAge: '200d' }));
+
+app.use('/api', api); // you can safely remove this, and whole api folder if you don't need api
 
 app.use((req, res) => { // eslint-disable-line consistent-return
   if (__DEVELOPMENT__) {
