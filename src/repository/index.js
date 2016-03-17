@@ -13,12 +13,10 @@ exports.default = {
       callback(null, { component: require('./info/RepoInfo').default });
     });
   },
-  getChildRoutes: (location, callback) => {
-    require.ensure([], (require) => {
-      callback(null, [
-        page('author', { component: require('./author/RepoAuthor').default }),
-        page('contributors', { component: require('./contributors/RepoContributors').default })
-      ]);
-    });
-  }
+  getChildRoutes: (location, callback) => require.ensure([], (require) => {
+    callback(null, [
+      page('author', { component: require('./author/RepoAuthor').default }),
+      page('contributors', { component: require('./contributors/RepoContributors').default })
+    ]);
+  })
 };

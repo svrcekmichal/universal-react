@@ -5,7 +5,6 @@ import todos from './todos';
 import bodyParser from 'body-parser';
 import { readFileSync, writeFile } from 'jsonfile';
 
-
 const app = express();
 const file = `${__dirname}/tmp/store.json`;
 const oldState = readFileSync(file, { throws: false });

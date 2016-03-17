@@ -51,19 +51,17 @@ const initialState = [{
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case CREATE_TODO: {
+    case CREATE_TODO:
       const newState = state.concat();
       newState.push(action.payload);
       return newState;
-    }
-    case UPDATE_TODO: {
+    case UPDATE_TODO:
       return state.map((todo) => {
         if (todo.id === action.payload.id) {
           return (action.payload);
         }
         return todo;
       });
-    }
     case DELETE_TODO:
       return state.filter((todo) => todo.id !== action.payload);
     default:

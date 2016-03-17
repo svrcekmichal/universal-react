@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 
 export default () => (
   <div className="homepage">
-    <Helmet title="Homepage"/>
+    <Helmet title="Homepage" />
     <h1>Homepage</h1>
   </div>
 )
