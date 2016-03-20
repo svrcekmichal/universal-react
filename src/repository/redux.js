@@ -61,6 +61,7 @@ export const reducer = (state = {
       return { ...state, author: action.payload.response.data };
     case LOAD_REPO_CONTRIBUTORS_SUCCESS:
       return { ...state, contributors: action.payload.response.data };
-    default: return state;
+    default:
+      return state;
   }
 };

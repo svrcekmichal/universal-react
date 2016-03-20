@@ -1,14 +1,14 @@
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
-import reducers from './reducers';
+import reducers from 'reducers';
 
-import { routerMiddleware } from 'react-router-redux';
 import axiosMiddleware from 'redux-axios-middleware';
+import { routerMiddleware } from 'react-router-redux';
 
-export default function createStore(history, data = undefined, client) {
+export default function (history, data = undefined, client) {
   let devTools = [];
   if (__DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__) {
     const { persistState } = require('redux-devtools');
-    const DevTools = require('../containers/DevTools/DevTools').default;
+    const DevTools = require('browser/DevTools').default;
     devTools = [
       window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument(),
       persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
@@ -28,8 +28,8 @@ export default function createStore(history, data = undefined, client) {
   );
 
   if (__DEVELOPMENT__ && module.hot) {
-    module.hot.accept('./reducers', () => {
-      store.replaceReducer(require('./reducers').default);
+    module.hot.accept('reducers', () => {
+      store.replaceReducer(require('reducers').default);
     });
   }
 

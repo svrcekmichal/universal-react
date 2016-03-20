@@ -1,21 +1,24 @@
 import Express from 'express';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import config from './../config';
 import favicon from 'serve-favicon';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import path from 'path';
-import createStore from './../redux/createStore';
-import Html from './Html';
 import http from 'http';
-import createMemoryHistory from 'history/lib/createMemoryHistory';
-import { match, RouterContext } from 'react-router';
+import { match, RouterContext, createMemoryHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { getRoutes } from 'routes';
-import { resolveOnServer } from 'reasync';
 import { syncHistoryWithStore } from 'react-router-redux';
-import createClient from 'utils/createClient';
+
+import Html from './Html';
+
+import config from 'shared/config';
+import createStore from 'shared/createStore';
+import createClient from 'shared/createClient';
+import { createServerResolver } from 'shared/reasync';
+
+import api from './api';
 
 // const pretty = new PrettyError();
 const app = new Express();
@@ -26,6 +29,8 @@ app.use(cookieParser());
 
 app.use(favicon(path.join('dist', 'favicon.ico')));
 app.use('/assets', Express.static(path.join('dist', 'assets'), { maxAge: '200d' }));
+
+app.use('/api', api); // you can safely remove this, and whole api folder if you don't need api
 
 app.use((req, res) => { // eslint-disable-line consistent-return
   if (__DEVELOPMENT__) {
@@ -51,7 +56,7 @@ app.use((req, res) => { // eslint-disable-line consistent-return
     return hydrateOnClient();
   }
 
-  function render(renderProps) {
+  const render = renderProps => {
     const component = (
       <Provider store={store} key="provider">
         <RouterContext {...renderProps} />
@@ -61,7 +66,7 @@ app.use((req, res) => { // eslint-disable-line consistent-return
       <Html assets={webpackIsomorphicTools.assets()} component={component} store={store} head={config.tags} />
     );
     return res.status(200).send(`<!doctype html>\n${html}`);
-  }
+  };
 
   match({ history, routes, location: req.originalUrl }, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
@@ -74,8 +79,13 @@ app.use((req, res) => { // eslint-disable-line consistent-return
     }
 
     if (renderProps) {
-      return resolveOnServer(renderProps, store)
-        .then(() => render(renderProps))
+      const attrs = {
+        location: renderProps.location,
+        params: renderProps.params,
+        getState: store.getState,
+        dispatch: store.dispatch
+      };
+      return createServerResolver().triggerHooks(renderProps.components, attrs, render.bind(null, renderProps))
         .catch((e) => {
           console.error(e);
           hydrateOnClient();
@@ -90,5 +100,5 @@ server.listen(config.port, (err) => {
   if (err) {
     console.error(err);
   }
-  console.info(`==> 💻  Open http://${config.host}:${config.port} in a browser to view the app.`);
+  console.info(`==> Open http://${config.host}:${config.port} in a browser to view the app.`);
 });

@@ -1,31 +1,24 @@
-import fs from 'fs';
 import path from 'path';
 import webpack from 'webpack';
 import webpackIsomorphicAssets from './webpack-isomorphic-assets';
 import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
+import autoprefixer from 'autoprefixer';
 
-import serverConfig from './../src/config';
+import serverConfig from './../platforms/shared/config';
 
-const {host, hotPort:port} = serverConfig;
+const { host, hotPort: port } = serverConfig;
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(webpackIsomorphicAssets);
 
 const assetsPath = path.resolve(__dirname, 'dist', 'build');
 
 function stylesLoaders() {
-
   const loaders = {
-    'css': ''
+    css: 'css-loader?modules&importLoaders=1&localIdentName=[path][name]__[local]__[hash:base64:5]!postcss-loader'
   };
-
-  return Object.keys(loaders).map(ext => {
-    const prefix = 'css-loader!postcss-loader';
-    const extLoaders = prefix + loaders[ext];
-    const loader = `style-loader!${extLoaders}`;
-    return {
-      loader,
-      test: new RegExp(`\\.(${ext})$`)
-    };
-  });
+  return Object.keys(loaders).map(ext => ({
+    loader: `style-loader!${loaders[ext]}`,
+    test: new RegExp(`\\.(${ext})$`)
+  }));
 }
 
 export default {
@@ -34,16 +27,16 @@ export default {
   debug: true,
   devtools: 'cheap-module-eval-source-map',
   entry: {
-    'main': [
-      'webpack-hot-middleware/client?path=http://' + host + (port ? (':' + port) : '') + '/__webpack_hmr',
-      './src/client.js'
+    main: [
+      `webpack-hot-middleware/client?path=http://${host}${port ? `:${port}` : ''}/__webpack_hmr`,
+      './platforms/browser/index.js'
     ]
   },
   output: {
     path: assetsPath,
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[chunkhash].js',
-    publicPath: 'http://' + host + ':' + port + '/dist/build/'
+    publicPath: `http://${host}:${port}/dist/build/`
   },
   module: {
     loaders: [{
@@ -55,11 +48,11 @@ export default {
       loader: 'babel',
       query: {
         plugins: [
-          ["react-transform", {
-            "transforms": [{
-              transform: "react-transform-hmr",
-              imports: ["react"],
-              locals: ["module"]
+          ['react-transform', {
+            transforms: [{
+              transform: 'react-transform-hmr',
+              imports: ['react'],
+              locals: ['module']
             }]
           }]
         ]
@@ -69,19 +62,19 @@ export default {
   progress: true,
   resolve: {
     modulesDirectories: [
+      'platforms',
       'src',
       'node_modules'
     ],
     extensions: ['', '.json', '.js', '.jsx'],
-    fallback: path.join(__dirname, "..", "node_modules")
+    fallback: path.join(__dirname, '..', 'node_modules')
   },
   resolveLoader: {
-    root: path.join(__dirname, "..", "node_modules")
+    root: path.join(__dirname, '..', 'node_modules')
   },
   plugins: [
     // hot reload
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       __CLIENT__: true,
@@ -91,5 +84,5 @@ export default {
     }),
     webpackIsomorphicToolsPlugin.development()
   ],
-  postcss: () => [autoprefixer({browsers: 'last 2 version'})],
-}
+  postcss: () => [autoprefixer({ browsers: 'last 2 version' })]
+};

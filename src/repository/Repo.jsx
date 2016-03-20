@@ -1,14 +1,14 @@
 import React from 'react';
-import asyncResolve from 'reasync';
+import { pre } from 'reasync';
 import Helmet from 'react-helmet';
-import {shouldLoadRepo,loadRepo} from './redux'
-import {Link} from 'react-router'
+import { shouldLoadRepo, loadRepo } from './redux'
+import { Link } from 'react-router'
 
-const preResolve = ({getState,dispatch}) => shouldLoadRepo(getState()) ? dispatch(loadRepo('svrcekmichal/universal-react')) : undefined;
+const preResolve = ({ getState, dispatch }) => shouldLoadRepo(getState()) ? dispatch(loadRepo('svrcekmichal/universal-react')) : undefined;
 
-const Repo = ({children}) => (
+const Repo = ({ children }) => (
   <div className="repository">
-    <Helmet title="repository Page"/>
+    <Helmet title="repository Page" />
 
     <h1>Repository</h1>
     <ul className="nav">
@@ -30,4 +30,4 @@ const Repo = ({children}) => (
   </div>
 );
 
-export default asyncResolve(preResolve)(Repo);
+export default pre(preResolve)(Repo);
