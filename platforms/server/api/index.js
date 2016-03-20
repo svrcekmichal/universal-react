@@ -7,7 +7,14 @@ import { readFileSync, writeFile } from 'jsonfile';
 
 const app = express();
 const file = `${__dirname}/tmp/store.json`;
-const oldState = readFileSync(file, { throws: false });
+let oldState;
+try {
+  oldState = readFileSync(file);
+} catch (e) {
+  console.log('File store.json is invalid json or not found. Creating new.');
+  oldState = {};
+}
+
 const store = createStore(reducer, oldState);
 
 store.subscribe(() => writeFile(file, store.getState(), (err) => err && console.error('Error writeFile:', err)));
