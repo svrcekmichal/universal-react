@@ -8,11 +8,8 @@ import Author from './Author/Author';
 export const getRoutes = () => ({
   component:Repository,
   indexRoute:BaseInfo,
-  childRoutes:[{
-    path:'author',
-    component:Author
-  },{
-    path:'contributors',
-    component:Contributors
-  }]
+  childRoutes:[
+    { path:'author', component:Author },
+    { path:'contributors', component:Contributors }
+  ]
 });

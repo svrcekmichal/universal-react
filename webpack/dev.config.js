@@ -34,8 +34,8 @@ export default {
   },
   output: {
     path: assetsPath,
-    filename: '[name]-[hash].js',
-    chunkFilename: '[name]-[chunkhash].js',
+    filename: '[name].js',
+    chunkFilename: '[name].js',
     publicPath: `http://${host}:${port}/dist/build/`
   },
   module: {

@@ -21,26 +21,26 @@ const hasDevToolsExtension = () => typeof window === 'object'
 
 const showDevTools = __DEVELOPMENT__ && __DEVTOOLS__ && !hasDevToolsExtension();
 
-const render = (component) => () => ReactDOM.render(
-  <Provider store={store} key="provider">
-    {component}
-  </Provider>,
-  mountPoint
-);
-
-let componentToRender;
-if (showDevTools) {
-  const DevTools = require('./DevTools').default;
-  componentToRender = (
-    <div>
-      {router}
-      <DevTools />
-    </div>
-  );
-} else {
-  componentToRender = router;
-}
-
 const { pathname, search, hash } = window.location;
 const location = `${pathname}${search}${hash}`;
-match({ routes, history, location }, render(componentToRender));
+match({ routes, history, location }, () => { // to preload all components needed and not break server markup
+  if (showDevTools && !hasDevToolsExtension()) {
+    const DevTools = require('./DevTools').default;
+    ReactDOM.render(
+      <Provider store={store} key="provider">
+        <div>
+          {router}
+          <DevTools />
+        </div>
+      </Provider>,
+      mountPoint
+    );
+  } else {
+    ReactDOM.render(
+      <Provider store={store} key="provider">
+        {router}
+      </Provider>,
+      mountPoint
+    );
+  }
+});
