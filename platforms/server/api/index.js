@@ -10,10 +10,7 @@ const file = `${__dirname}/tmp/store.json`;
 let oldState;
 try {
   oldState = readFileSync(file);
-} catch (e) {
-  console.log('File store.json is invalid json or not found. Creating new.');
-  oldState = {};
-}
+} catch (e) {} // eslint-disable-line no-empty
 
 const store = createStore(reducer, oldState);
 
