@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Repository from './Repository';
-import BaseInfo from './BaseInfo/BaseInfo'
-import Contributors from './Contributors/Contributors';
-import Author from './Author/Author';
+import Repository from './containers/Repository';
+import BaseInfo from 'routes/base-info/containers/BaseInfo'
+import Contributors from 'routes/contributors/containers/Contributors';
+import Author from 'routes/author/containers/Author';
 
 export const getRoutes = () => ({
   component:Repository,

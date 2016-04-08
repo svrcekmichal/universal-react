@@ -6,7 +6,7 @@ export default class Homepage extends Component {
     return (
       <div className="homepage">
         <Helmet title="Homepage" />
-        <h1>Homepagee</h1>
+        <h1>Homepage</h1>
       </div>
     );
   }

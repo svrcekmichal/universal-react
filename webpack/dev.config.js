@@ -67,10 +67,10 @@ export default {
       'node_modules'
     ],
     extensions: ['', '.json', '.js', '.jsx'],
-    fallback: path.join(__dirname, '..', '..', 'node_modules')
+    fallback: path.join(__dirname, '..', 'node_modules')
   },
   resolveLoader: {
-    root: path.join(__dirname, '..', '..', 'node_modules'),
+    root: path.join(__dirname, '..', 'node_modules'),
   },
   plugins: [
     // hot reload

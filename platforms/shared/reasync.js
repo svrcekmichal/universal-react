@@ -20,15 +20,17 @@ export const createServerResolver = () => {
   return resolver;
 };
 
-export const createClientResolver = (history, routes, { getState, dispatch }) => {
-  const resolver = _createClientResolver(history, routes, { getState, dispatch });
+export const createClientResolver = (history, routes, location, { getState, dispatch }) => {
+  const resolver = _createClientResolver(history, routes, location, { getState, dispatch });
 
-  resolver.addHooks(PRE_RESOLVE_HOOK)
+  resolver
+    .addHooks(PRE_RESOLVE_HOOK)
     .addHooks(createTransitionHook(), DEFER_RESOLVE_HOOK);
 
   if (__DEVELOPMENT__) {
     resolver.setErrorHandler((e) => console.log(e));
   }
 
+  resolver.forceTrigger();
   return resolver;
 };

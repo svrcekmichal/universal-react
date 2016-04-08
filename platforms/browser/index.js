@@ -9,20 +9,21 @@ import createStore from 'shared/createStore';
 import createClient from 'shared/createClient';
 import { createClientResolver } from 'shared/reasync';
 
+const { pathname, search, hash } = window.location;
+const url = `${pathname}${search}${hash}`;
+const location = browserHistory.createLocation(url);
 const store = createStore(browserHistory, window.__data__, createClient());
 const history = syncHistoryWithStore(browserHistory, store);
 const routes = getRoutes(store);
 const mountPoint = document.getElementById('content');
 const router = (<Router history={history} routes={routes} />);
-createClientResolver(history, routes, store);
+createClientResolver(history, routes, location, store);
 
 const hasDevToolsExtension = () => typeof window === 'object'
 && typeof window.devToolsExtension !== 'undefined';
 
 const showDevTools = __DEVELOPMENT__ && __DEVTOOLS__ && !hasDevToolsExtension();
 
-const { pathname, search, hash } = window.location;
-const location = `${pathname}${search}${hash}`;
 match({ routes, history, location }, () => { // to preload all components needed and not break server markup
   if (showDevTools && !hasDevToolsExtension()) {
     const DevTools = require('./DevTools').default;

@@ -9,14 +9,14 @@ export const getRoutes = (store) => ({
   getChildRoutes(location, cb) {
     require.ensure([], (require) => {
       cb(null, [
-        route('repo',require('./Repository/routes').getRoutes()),
-        route('*',{ component: require('./NotFound404/NotFound404').default })
+        route('repo',require('./repository/routes').getRoutes()),
+        route('*',{ component: require('./special/NotFound404').default })
       ]);
     });
   },
   getIndexRoute(location,cb) {
     require.ensure([], (require) => {
-      cb(null, { component: require('./Homepage/Homepage').default });
+      cb(null, { component: require('./homapage/Homepage').default });
     });
   }
 });
