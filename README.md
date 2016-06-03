@@ -1,4 +1,4 @@
-# universal-react
+# Project is not maintained anymore. There are much better boilerplates for starting your app
 
 ## Installation
 
